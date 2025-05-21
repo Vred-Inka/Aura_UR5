@@ -1,4 +1,4 @@
-// bla bla
+// Aura by Vredinka
 
 #pragma once
 
@@ -16,4 +16,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	TObjectPtr<USkeletalMeshComponent> Weapon;
 };
