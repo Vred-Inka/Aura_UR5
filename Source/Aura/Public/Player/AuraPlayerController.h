@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "AuraPlayerController.generated.h"
 
+class UInputMappingContext;
 /**
  * 
  */
@@ -13,5 +14,14 @@ UCLASS()
 class AAuraPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+public:
+	AAuraPlayerController();
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(EditAnywhere, category = "Input")
+	TObjectPtr<UInputMappingContext> AuraContext;
 };
