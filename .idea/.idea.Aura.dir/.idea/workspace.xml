@@ -9,13 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fe8e2cad-aa98-4ee7-b33f-4ceee1c16ac1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aura.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEditor.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditor.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Characters/Aura/SKM_Aura.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Characters/Aura/SKM_Aura.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Characters/Aura/SK_Aura.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Characters/Aura/SK_Aura.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/SK_Goblin.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/SK_Goblin.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/StartupMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacterBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacterBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Aura/BP_AuraCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Aura/BP_AuraCharacter.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +127,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1747836424160</updated>
-      <workItem from="1747839032541" duration="4159000" />
+      <workItem from="1747839032541" duration="6044000" />
     </task>
     <servers />
   </component>
