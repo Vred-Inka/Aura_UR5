@@ -8,8 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fe8e2cad-aa98-4ee7-b33f-4ceee1c16ac1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aura.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Aura.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/Aura.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Aura.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Aura.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +24,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="cidr-memory-view://5" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Aura/Private/Player/AuraPlayerState.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/Aura/Public/Player/AuraPlayerState.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -35,21 +35,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Uproject.Aura.executor": "Run",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Uproject.Aura.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Aura" type="Uproject" factoryName="rider.uproject">
       <configuration_1 setup="1">
@@ -133,7 +133,8 @@
       <option name="presentableId" value="Default" />
       <updated>1747836424160</updated>
       <workItem from="1747839032541" duration="19720000" />
-      <workItem from="1748005449098" duration="917000" />
+      <workItem from="1748005449098" duration="1660000" />
+      <workItem from="1748008425225" duration="147000" />
     </task>
     <servers />
   </component>
@@ -159,11 +160,6 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Source/Aura/Public/Player/AuraPlayerState.h</url>
-          <line>17</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
