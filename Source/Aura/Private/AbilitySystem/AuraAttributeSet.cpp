@@ -13,8 +13,6 @@
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
-	InitMana(50.f);
-	InitMaxMana(100.f);
 }
 
 void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -71,15 +69,19 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
+	FString EffectName = Data.EffectSpec.Def.GetFullName();
+
 	if (Data.EvaluatedData.Attribute ==  GetHealthAttribute())
 	{
-		GEngine->AddOnScreenDebugMessage(1,3.0f,FColor::Red,FString::Printf(TEXT("Health: %f"), GetHealth()));
+		GEngine->AddOnScreenDebugMessage(1,3.0f,FColor::Red,
+			FString::Printf(TEXT("Health(%s): %f"), *EffectName, GetHealth()));
 		SetHealth( FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
 	}
 
 	if (Data.EvaluatedData.Attribute ==  GetManaAttribute())
 	{
-		GEngine->AddOnScreenDebugMessage(1,3.0f,FColor::Blue,FString::Printf(TEXT("Mana: %f"), GetHealth()));
+		GEngine->AddOnScreenDebugMessage(1,5.0f,FColor::Blue,
+			FString::Printf(TEXT("Mana(%s): %f"), *EffectName, GetMana()));
 		SetMana( FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
 	}
 }
