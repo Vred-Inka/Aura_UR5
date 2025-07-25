@@ -84,7 +84,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
 	{
-		if (GetASC() == nullptr)
+		if (GetASC() != nullptr)
 		{
 			GetASC()->AbilityInputTagReleased(InputTag);
 		}
@@ -93,9 +93,9 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 	if (bTargeting)
 	{
-		if (GetASC() == nullptr)
+		if (GetASC() != nullptr)
 		{
-			GetASC()->AbilityInputTagHeld(InputTag);
+			GetASC()->AbilityInputTagReleased(InputTag);
 		}
 	}
 	else
@@ -112,8 +112,11 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
 					//DrawDebugSphere(GetWorld(), PointLoc, 8.0f, 8, FColor::Green,false, 5.0f);
 				}
-
-				CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() -1];
+				if (!NavPath->PathPoints.IsEmpty())
+				{
+					CachedDestination = NavPath->PathPoints[NavPath->PathPoints.Num() -1];
+				}
+				
 				bAutoRunning = true;
 			}
 		}
@@ -127,7 +130,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
 	{
-		if (GetASC() == nullptr)
+		if (GetASC() != nullptr)
 		{
 			GetASC()->AbilityInputTagHeld(InputTag);
 		}
@@ -136,7 +139,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 
 	if (bTargeting)
 	{
-		if (GetASC() == nullptr)
+		if (GetASC() != nullptr)
 		{
 			GetASC()->AbilityInputTagHeld(InputTag);
 		}
