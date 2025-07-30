@@ -4,6 +4,7 @@
 #include "Character/AuraEnemy.h"
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "Player/AuraPlayerState.h"
 #include "Aura/Aura.h"
 
 AAuraEnemy::AAuraEnemy()
@@ -93,7 +94,9 @@ void Foo1(Body& body)
 }
 
 void AAuraEnemy::InitAbilityActorInfo()
-{	
+{
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+
+	InitializeDefaultAttributes();
 }

@@ -91,6 +91,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 	if (Data.EvaluatedData.Attribute ==  GetHealthAttribute())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Changed Health on %s, Health: %f"), *Props.TargetAvatarActor->GetName(), GetHealth());
 		GEngine->AddOnScreenDebugMessage(1,3.0f,FColor::Red,
 			FString::Printf(TEXT("Health(%s): %f"), *EffectName, GetHealth()));
 		SetHealth( FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
