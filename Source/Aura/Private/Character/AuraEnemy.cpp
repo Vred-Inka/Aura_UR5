@@ -4,6 +4,7 @@
 #include "Character/AuraEnemy.h"
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Player/AuraPlayerState.h"
 #include "Aura/Aura.h"
@@ -87,57 +88,7 @@ void AAuraEnemy::InitAbilityActorInfo()
 	}
 }
 
-
-/*
- *
-* 
-template<typename ReturnType, typename... Args>
-struct FunctionAdapterType
+void AAuraEnemy::InitializeDefaultAttributes() const
 {
-	using Type = ReturnType(*)(const FActiveGameplayEffectHandle&, Args&&...);
-};
-class AnyFakeFunctionPointer
-{
-};
-
-using FunctionPointer = void*;
-AnyFakeFunctionPointer m_Callback;
-FunctionPointer m_CallbackAdapter{ nullptr };
-
-template<typename... Args>
-void Foo(Args&&... args)
-{
-	std::vector<FActiveGameplayEffectHandle> handlers;
-	for (const FActiveGameplayEffectHandle& handler : handlers)
-	{
-		using AdapterFunctionType = typename FunctionAdapterType<int, Args...>::Type;
-		AdapterFunctionType callbackAsFuncType = reinterpret_cast<AdapterFunctionType>(m_CallbackAdapter);
-
-		const int result = callbackAsFuncType(handler, std::forward<Args>(args)...);
-	}
+	UAuraAbilitySystemLibrary::InitializeDefaultAttrbutes(this, CharacterClass, Level, AbilitySystemComponent);
 }
-
-
-class Body
-{
-public:
-	float GetFilterInfo(){ return filterInfo; }
-	void SetFilterInfo(float info){ filterInfo  =  info;}
-	
-private:
-	float filterInfo {2.0f};
-};
-
-void Foo1(Body& body)
-{
-	const auto filterInfo = body.GetFilterInfo();
-
-	for (int i = 0; i < 10; ++i)
-	{
-		Body b;
-		b.SetFilterInfo(filterInfo);
-	}
-	
-}
-
- */
