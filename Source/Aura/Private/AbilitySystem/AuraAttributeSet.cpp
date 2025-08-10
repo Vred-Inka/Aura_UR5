@@ -11,6 +11,7 @@
 #include "Player/AuraPlayerState.h"
 #include "UI/HUD/AuraHUD.h"
 #include "AuraGameplayTags.h"
+#include "Interaction/CombatInterface.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -116,7 +117,14 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 			const bool bFatal  =  NewHealth <= 0.0f;
 
-			if (!bFatal)
+			if (bFatal)
+			{
+				if (ICombatInterface* CombatInterface =  Cast<ICombatInterface>(Props.TargetAvatarActor))
+				{
+					CombatInterface->Die();
+				}
+			}
+			else
 			{
 				FGameplayTagContainer TagContainer;
 				TagContainer.AddLeafTag(FAuraGameplayTags::Get().Effects_HitReact);
