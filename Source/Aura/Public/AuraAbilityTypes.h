@@ -12,8 +12,8 @@ public:
 	bool IsCriticalHit() const { return bIsCriticalHit; }
 	bool IsBlockedHit() const { return bIsBlockedHit; }
 
-	void SetIsCriticalHit(bool bIsCriticalHit) { this->bIsCriticalHit = bIsCriticalHit; }
-	void SetIsBlockedHit(bool bIsBlockedHit) { this->bIsBlockedHit = bIsBlockedHit; }
+	void SetIsCriticalHit(bool Value) { this->bIsCriticalHit = Value; }
+	void SetIsBlockedHit(bool Value) { this->bIsBlockedHit = Value; }
 
 	
 	virtual UScriptStruct* GetScriptStruct() const override
