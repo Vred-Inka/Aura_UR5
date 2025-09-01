@@ -151,10 +151,9 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 	FCollisionQueryParams SphereParams;
 	SphereParams.AddIgnoredActors(ActorsToIgnore);
 
-	TArray<FOverlapResult> Overlaps;
-
 	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject,EGetWorldErrorMode::LogAndReturnNull))
 	{
+		TArray<FOverlapResult> Overlaps;
 		World->OverlapMultiByObjectType(Overlaps, SphereOrigin, FQuat::Identity,
 			FCollisionObjectQueryParams(FCollisionObjectQueryParams::InitType::AllDynamicObjects),
 			FCollisionShape::MakeSphere(Radius), SphereParams);
