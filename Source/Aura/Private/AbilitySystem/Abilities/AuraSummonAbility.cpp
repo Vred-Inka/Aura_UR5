@@ -2,6 +2,8 @@
 
 
 #include "AbilitySystem/Abilities/AuraSummonAbility.h"
+
+#include "NiagaraFunctionLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 TArray<FVector> UAuraSummonAbility::GetSpawnLocations()
@@ -35,7 +37,18 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations()
 			FLinearColor::Green,
 			3.0f
 		);
+
+		//USceneComponent* NiagaraComponent ;
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), this, NAME_None,
+			ChosenSpawnLocation, FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
+		
 	}
 
 	return SpawnLocations;
+}
+
+TSubclassOf<APawn> UAuraSummonAbility::GetRandomMinionClass()
+{
+	const int32 Selection =  FMath::RandRange(0, MinionClasses.Num()-1);
+	return MinionClasses[Selection];
 }
