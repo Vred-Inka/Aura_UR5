@@ -10,6 +10,7 @@
  * 
  */
 class APawn;
+class UNiagaraSystem;
 UCLASS()
 class AURA_API UAuraSummonAbility : public UAuraGameplayAbility
 {
@@ -38,5 +39,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category= "Summoning")
 	float SpawnSpread = 90.0f;
 
-	UNiagaraSystem* SystemTemplat;
+	UPROPERTY(EditDefaultsOnly, Category= "Summoning")
+	TObjectPtr<UNiagaraSystem> SummonEffect;
 };

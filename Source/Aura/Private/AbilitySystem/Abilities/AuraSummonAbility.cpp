@@ -39,8 +39,13 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations()
 		);
 
 		//USceneComponent* NiagaraComponent ;
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), this, NAME_None,
-			ChosenSpawnLocation, FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
+
+		if (SummonEffect != nullptr)
+		{
+			//USceneComponent* SceneComponent = GetSceneComponentFromDetailsObject(this);
+			//CaptureSceneComponent->AddToRoot();
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), SummonEffect,  ChosenSpawnLocation);
+		}		
 		
 	}
 
