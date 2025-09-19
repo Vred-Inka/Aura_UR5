@@ -44,7 +44,7 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations()
 		{
 			//USceneComponent* SceneComponent = GetSceneComponentFromDetailsObject(this);
 			//CaptureSceneComponent->AddToRoot();
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), SummonEffect,  ChosenSpawnLocation);
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, SummonEffect, ChosenSpawnLocation);
 		}		
 		
 	}
