@@ -46,21 +46,43 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 		}
 	);
 
-	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
-		[this](const FGameplayTagContainer& AssetTags)
-		{			
-			for (const FGameplayTag& Tag: AssetTags)
-			{
-				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
-				if (Tag.MatchesTag(MessageTag))
-				{
-					//const FString Msg =  FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
-					//GEngine->AddOnScreenDebugMessage(1, 8.f, FColor::Blue, Msg);
-
-					const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageDataTable, Tag);
-					MessageWidgetRowDelegate.Broadcast(*Row);
-				}
-			}	
+	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent))
+	{
+		if (AuraASC->bStartupAbilitiesGiven)
+		{
+			OnInitializeStartupAbilities(AuraASC);
 		}
-	);
+		else
+		{
+			AuraASC->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::OnInitializeStartupAbilities);
+		}
+
+		AuraASC->EffectAssetTags.AddLambda(
+			[this](const FGameplayTagContainer& AssetTags)
+			{			
+				for (const FGameplayTag& Tag: AssetTags)
+				{
+					FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
+					if (Tag.MatchesTag(MessageTag))
+					{
+						//const FString Msg =  FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
+						//GEngine->AddOnScreenDebugMessage(1, 8.f, FColor::Blue, Msg);
+
+						const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageDataTable, Tag);
+						MessageWidgetRowDelegate.Broadcast(*Row);
+					}
+				}	
+			}
+		);
+	}
+}
+
+void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraASC)
+{
+	//TO DO: get info about all abilities and broadcast to widgets
+
+	if (!AuraASC->bStartupAbilitiesGiven)
+		return;
+
+	
 }
