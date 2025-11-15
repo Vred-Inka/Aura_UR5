@@ -75,6 +75,8 @@ public:
 	FGameplayTag Abilities_Fire_FireBolt;
 	FGameplayTag Cooldown_Fire_FireBolt;
 
+	FGameplayTag Abilities_Lightning_Electrocute;
+
 	FGameplayTag Montage_Attack_1;
 	FGameplayTag Montage_Attack_2;
 	FGameplayTag Montage_Attack_3;
