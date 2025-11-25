@@ -24,7 +24,10 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 			bool bEnableSpendPoints =  false;
 			bool bEnableEquip = false;
 			ShouldEnableButtons(StatusTag, CurrentSpellPoints, bEnableSpendPoints, bEnableEquip);
-			SpellGlobeSelectedDelegate.Broadcast(bEnableSpendPoints, bEnableEquip);
+			FString DescriptionString;
+			FString NextLevelDescriptionString;
+			GetAuraASC()->GetDescriptionsByAbilityTag(AbilityTag, DescriptionString, NextLevelDescriptionString);
+			SpellGlobeSelectedDelegate.Broadcast(bEnableSpendPoints, bEnableEquip, DescriptionString, NextLevelDescriptionString);
 		}
 		
 		if (AbilityInfo)
@@ -43,7 +46,10 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 		bool bEnableSpendPoints =  false;
 		bool bEnableEquip = false;
 		ShouldEnableButtons(SelectedAbility.StatusTag, CurrentSpellPoints, bEnableSpendPoints, bEnableEquip);
-		SpellGlobeSelectedDelegate.Broadcast(bEnableSpendPoints, bEnableEquip);
+		FString DescriptionString;
+		FString NextLevelDescriptionString;
+		GetAuraASC()->GetDescriptionsByAbilityTag(SelectedAbility.AbilityTag, DescriptionString, NextLevelDescriptionString);
+		SpellGlobeSelectedDelegate.Broadcast(bEnableSpendPoints, bEnableEquip, DescriptionString, NextLevelDescriptionString);
 	});
 	
 }
@@ -75,7 +81,11 @@ void USpellMenuWidgetController::SpellGlobeSelected(const FGameplayTag& AbilityT
 	bool bEnableSpendPoints =  false;
 	bool bEnableEquip = false;
 	ShouldEnableButtons(AbilityStatus, SpellPoints, bEnableSpendPoints, bEnableEquip);
-	SpellGlobeSelectedDelegate.Broadcast(bEnableSpendPoints, bEnableEquip);
+	ShouldEnableButtons(SelectedAbility.StatusTag, CurrentSpellPoints, bEnableSpendPoints, bEnableEquip);
+	FString DescriptionString;
+	FString NextLevelDescriptionString;
+	GetAuraASC()->GetDescriptionsByAbilityTag(SelectedAbility.AbilityTag, DescriptionString, NextLevelDescriptionString);
+	SpellGlobeSelectedDelegate.Broadcast(bEnableSpendPoints, bEnableEquip, DescriptionString, NextLevelDescriptionString);
 }
 
 void USpellMenuWidgetController::SpendPointButtonPressed()
