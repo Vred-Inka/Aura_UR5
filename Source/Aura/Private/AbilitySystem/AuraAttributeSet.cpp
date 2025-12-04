@@ -9,15 +9,12 @@
 #include "GameFramework/Pawn.h"
 #include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
-#include "Player/AuraPlayerState.h"
-#include "UI/HUD/AuraHUD.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
-#include "Aura/AuraLogChannels.h"
 #include "Interaction/CombatInterface.h"
 #include "Interaction/PlayerInterface.h"
-#include "Kismet/GameplayStatics.h"
 #include "Player/AuraPlayerController.h"
+#include "GameplayEffectComponents/TargetTagsGameplayEffectComponent.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -208,7 +205,12 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	DebuffEffect->Period = DebuffFrequency;
 	DebuffEffect->DurationMagnitude = FScalableFloat(DebuffDuration);
 
-	DebuffEffect->InheritableOwnedTagsContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	FInheritedTagContainer InheritedTags;
+	InheritedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	InheritedTags.CombinedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	UTargetTagsGameplayEffectComponent& Component = DebuffEffect->AddComponent<UTargetTagsGameplayEffectComponent>();
+	Component.SetAndApplyTargetTagChanges(InheritedTags);
+	//DebuffEffect->InheritableOwnedTagsContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
 
 	DebuffEffect->StackingType = EGameplayEffectStackingType::AggregateBySource;
 	DebuffEffect->StackLimitCount = 1;
