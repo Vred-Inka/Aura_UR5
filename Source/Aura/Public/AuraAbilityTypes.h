@@ -46,7 +46,10 @@ struct FDamageEffectParams
 	float DebuffFrequency{0.0f};
 	
 	UPROPERTY()
-	float DeathImpulseMagnitude{0.0f}; 
+	float DeathImpulseMagnitude{0.0f};
+
+	UPROPERTY()
+	FVector DeathImpulse{FVector::ZeroVector};
 };
 
 USTRUCT(BlueprintType)
@@ -62,6 +65,7 @@ public:
 	float GetDebuffDuration() const { return DebuffDuration; }
 	float GetDebuffFrequency() const { return DebuffFrequency; }
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
+	FVector GetDeathImpulse() const { return DeathImpulse; }
 
 	void SetIsCriticalHit(bool bInIsCriticalHit) { this->bIsCriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockingHit) { this->bIsBlockedHit = bInIsBlockingHit; }
@@ -70,6 +74,7 @@ public:
 	void SetDebuffDuration(float InDuration) { this->DebuffDuration = InDuration; }
 	void SetDebuffFrequency(float InFrequency) { this->DebuffFrequency = InFrequency; }
 	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { this->DamageType = InDamageType; }
+	void SetDeathImpulse(const FVector& InDeathImpulse) { this->DeathImpulse = InDeathImpulse; }
 	
 	virtual UScriptStruct* GetScriptStruct() const override
 	{
@@ -111,6 +116,9 @@ protected:
 	float DebuffFrequency = 0.0f;
 
 	TSharedPtr<FGameplayTag> DamageType;
+
+	UPROPERTY()
+	FVector DeathImpulse =  FVector::ZeroVector;
 };
 
 template<>
