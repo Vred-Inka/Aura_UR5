@@ -137,7 +137,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
  * Debuffs
  */
 	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get()
-		.AddNativeGameplayTag(FName("Debuff.Fire"),
+		.AddNativeGameplayTag(FName("Debuff.Burn"),
 		FString("Debuff for Fire Damage"));
 
 	GameplayTags.Debuff_Stun = UGameplayTagsManager::Get()

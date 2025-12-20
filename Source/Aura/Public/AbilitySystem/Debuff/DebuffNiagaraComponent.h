@@ -18,7 +18,7 @@ class AURA_API UDebuffNiagaraComponent : public UNiagaraComponent
 public:
 	UDebuffNiagaraComponent();
 	
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	FGameplayTag DebuffTag;
 
 protected:

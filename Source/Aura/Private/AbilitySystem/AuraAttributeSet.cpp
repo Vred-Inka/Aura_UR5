@@ -117,6 +117,9 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
+	if (!IsValid(Props.TargetCharacter))
+		return;
+	
 	if (Props.TargetCharacter->Implements<UCombatInterface>())
 	{
 		if (ICombatInterface::Execute_IsDead(Props.TargetCharacter))
@@ -167,7 +170,8 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 			//TODO: use death impulse
 			if (ICombatInterface* CombatInterface =  Cast<ICombatInterface>(Props.TargetAvatarActor))
 			{
-				CombatInterface->Die();
+				FVector Impulse = UAuraAbilitySystemLibrary::GetDeathImpulse(Props.EffectContextHandle);
+				CombatInterface->Die(Impulse);
 				SendXPEvent(Props);
 			}
 		}
@@ -176,6 +180,12 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 			FGameplayTagContainer TagContainer;
 			TagContainer.AddLeafTag(FAuraGameplayTags::Get().Effects_HitReact);
 			Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+
+			const FVector& KnockbackForce = UAuraAbilitySystemLibrary::GetKnockbackForce(Props.EffectContextHandle);
+			if (!KnockbackForce.IsNearlyZero(1.f))
+			{
+				Props.TargetCharacter->LaunchCharacter(KnockbackForce, true, true);
+			}
 		}
 
 		const bool bBlockHit =  UAuraAbilitySystemLibrary::IsBlockedHit(Props.EffectContextHandle);
