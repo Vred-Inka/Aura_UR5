@@ -9,6 +9,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
+#include "NiagaraFunctionLibrary.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Components/SplineComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -113,7 +114,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 	if (!bTargeting && !bShiftKeyDown)
 	{	
 		const APawn* ControlledPawn = GetPawn();
-		if (FollowTime <= ShortPressThreshold)
+		if (FollowTime <= ShortPressThreshold && ControlledPawn != nullptr)
 		{
 			if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this,
 				ControlledPawn->GetActorLocation(), CachedDestination))
@@ -131,6 +132,8 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				
 				bAutoRunning = true;
 			}
+
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
 		}
 
 		FollowTime = 0.0f;
