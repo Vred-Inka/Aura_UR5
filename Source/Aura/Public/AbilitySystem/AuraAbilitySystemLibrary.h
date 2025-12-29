@@ -104,6 +104,9 @@ public:
 		const TArray<AActor*>& ActorsToIgnore, float Radius, const FVector& SphereOrigin);
 
 	UFUNCTION(BlueprintPure, Category="AuraAbilitysystemLibrary|GameplayMechanics")
+	static void GetClosestTargets(int32 MaxTargets, const TArray<AActor*>& Actors, TArray<AActor*>& OutClosestTargets, const FVector& Origin);
+
+	UFUNCTION(BlueprintPure, Category="AuraAbilitysystemLibrary|GameplayMechanics")
 	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
 
 	UFUNCTION(BlueprintCallable, Category="AuraAbilitysystemLibrary|DamageEffect")
