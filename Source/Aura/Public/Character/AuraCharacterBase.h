@@ -46,6 +46,9 @@ public:
 	UFUNCTION()
 	virtual void OnRep_Burned();
 
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	bool bIsBeingShocked = false;
+
 /** Combat Interface */
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 	virtual void Die(const FVector DeathImpulse) override;
@@ -61,6 +64,8 @@ public:
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
 	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override;
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
+	virtual bool IsBeingShocked_Implementation() override;
+	virtual void SetIsBeingShocked_Implementation(bool IsShocked) override;
 /** end Combat Interface */
 
 	FOnASCRegistered OnASCRegistered;
