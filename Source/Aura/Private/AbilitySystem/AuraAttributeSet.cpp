@@ -216,9 +216,17 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	DebuffEffect->Period = DebuffFrequency;
 	DebuffEffect->DurationMagnitude = FScalableFloat(DebuffDuration);
 
+	const FGameplayTag DebuffTag = GameplayTags.DamageTypesToDebuffs[DamageType];
 	FInheritedTagContainer InheritedTags;
 	InheritedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
 	InheritedTags.CombinedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
+	{
+		InheritedTags.AddTag(GameplayTags.Player_Block_CursorTraced);
+		InheritedTags.AddTag(GameplayTags.Player_Block_InputHeld);
+		InheritedTags.AddTag(GameplayTags.Player_Block_InputPressed);
+		InheritedTags.AddTag(GameplayTags.Player_Block_InputReleased);
+	}
 	UTargetTagsGameplayEffectComponent& Component = DebuffEffect->AddComponent<UTargetTagsGameplayEffectComponent>();
 	Component.SetAndApplyTargetTagChanges(InheritedTags);
 	//DebuffEffect->InheritableOwnedTagsContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
