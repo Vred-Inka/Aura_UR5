@@ -129,7 +129,7 @@ void USpellMenuWidgetController::EquipButtonPressed()
 	const FGameplayTag SelectedStatus =  GetAuraASC()->GetStatusTagFromAbilityTag(SelectedAbility.AbilityTag);
 	if (SelectedStatus.MatchesTagExact(FAuraGameplayTags::Get().Abilities_Status_Equipped))
 	{
-		SelectedSlot = GetAuraASC()->GetInputTagFromAbilityTag(SelectedAbility.AbilityTag);
+		SelectedSlot = GetAuraASC()->GetSlotFromAbilityTag(SelectedAbility.AbilityTag);
 	}
 }
 
