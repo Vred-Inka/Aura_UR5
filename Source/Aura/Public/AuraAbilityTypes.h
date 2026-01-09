@@ -59,6 +59,18 @@ struct FDamageEffectParams
 
 	UPROPERTY(BlueprintReadWrite)
 	FVector KnockbackForce{FVector::ZeroVector};
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsRadialDamage{false};
+
+	UPROPERTY(BlueprintReadWrite)
+	float RadialDamageInnerRadius{0.0f};
+
+	UPROPERTY(BlueprintReadWrite)
+	float RadialDamageOuterRadius{0.0f};
+
+	UPROPERTY(BlueprintReadWrite)
+	FVector RadialDamageOrigin{FVector::ZeroVector};
 };
 
 USTRUCT(BlueprintType)
@@ -76,6 +88,10 @@ public:
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 	FVector GetDeathImpulse() const { return DeathImpulse; }
 	FVector GetKnockbackForce() const { return KnockbackForce; }
+	bool IsRadialDamage() const { return bIsRadialDamage; }
+	float GetRadialDamageInnerRadius() const { return RadialDamageInnerRadius; }
+	float GetRadialDamageOuterRadius() const { return RadialDamageOuterRadius; }
+	FVector GetRadialDamageOrigin() const { return RadialDamageOrigin; }
 
 	void SetIsCriticalHit(bool bInIsCriticalHit) { this->bIsCriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockingHit) { this->bIsBlockedHit = bInIsBlockingHit; }
@@ -86,6 +102,10 @@ public:
 	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { this->DamageType = InDamageType; }
 	void SetDeathImpulse(const FVector& InDeathImpulse) { this->DeathImpulse = InDeathImpulse; }
 	void SetKnockbackForce(const FVector& InForce) { this->KnockbackForce = InForce; }
+	void SetIsRadialDamage(bool bInIsRadialDamage) { this->bIsRadialDamage = bInIsRadialDamage; }
+	void SetRadialDamageInnerRadius(float InInnerRadius) { this->RadialDamageInnerRadius = InInnerRadius; }
+	void SetRadialDamageOuterRadius(float InOuterRadius) { this->RadialDamageOuterRadius = InOuterRadius; }
+	void SetRadialDamageOrigin(const FVector& InOrigin) { this->RadialDamageOrigin = InOrigin; }
 	
 	virtual UScriptStruct* GetScriptStruct() const override
 	{
@@ -133,6 +153,18 @@ protected:
 
 	UPROPERTY()
 	FVector KnockbackForce = FVector::ZeroVector;
+	
+	UPROPERTY()
+	bool bIsRadialDamage{false};
+
+	UPROPERTY()
+	float RadialDamageInnerRadius{0.0f};
+
+	UPROPERTY()
+	float RadialDamageOuterRadius{0.0f};
+
+	UPROPERTY()
+	FVector RadialDamageOrigin{FVector::ZeroVector};	
 };
 
 template<>
