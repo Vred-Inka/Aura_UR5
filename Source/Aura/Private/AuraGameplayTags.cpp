@@ -137,7 +137,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
  * Debuffs
  */
 	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get()
-		.AddNativeGameplayTag(FName("Debuff.Fire"),
+		.AddNativeGameplayTag(FName("Debuff.Burn"),
 		FString("Debuff for Fire Damage"));
 
 	GameplayTags.Debuff_Stun = UGameplayTagsManager::Get()
@@ -261,7 +261,10 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Abilities_Type_None = UGameplayTagsManager::Get()
 		.AddNativeGameplayTag(FName("Abilities.Type.None"),
 		FString("None Type"));
-	
+
+/*
+ *  Effective ability spell tags
+ */
 
 	GameplayTags.Abilities_Fire_FireBolt = UGameplayTagsManager::Get()
 	.AddNativeGameplayTag(FName("Abilities.Fire.FireBolt"),
@@ -271,8 +274,25 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		.AddNativeGameplayTag(FName("Abilities.Lightning.Electrocute"),
 		FString("Electrocute Ability Tag"));
 
+	GameplayTags.Abilities_Arcane_ArcaneShards = UGameplayTagsManager::Get()
+		.AddNativeGameplayTag(FName("Abilities.Arcane.ArcaneShards"),
+		FString("ArcaneShard Tag"));
 
+/*
+*  Passive spells tags
+*/
 	
+	GameplayTags.Abilities_Passive_LifeSiphon = UGameplayTagsManager::Get()
+		.AddNativeGameplayTag(FName("Abilities.Passive.LifeSiphon"),
+		FString("Life Siphon"));
+
+	GameplayTags.Abilities_Passive_ManaSiphon = UGameplayTagsManager::Get()
+		.AddNativeGameplayTag(FName("Abilities.Passive.ManaSiphon"),
+		FString("Mana Siphon"));
+
+	GameplayTags.Abilities_Passive_HaloOfProtection = UGameplayTagsManager::Get()
+		.AddNativeGameplayTag(FName("Abilities.Passive.HaloOfProtection"),
+		FString("Halo Of Protection"));
 
 /*
  *  Cooldown tags
@@ -280,6 +300,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Cooldown_Fire_FireBolt = UGameplayTagsManager::Get()
 		.AddNativeGameplayTag(FName("Cooldown.Fire.FireBolt"),
 		FString("FireBolt Cooldown Tag"));
+	
 	
 /*
  *  Abilities
@@ -317,5 +338,25 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 
 	GameplayTags.Montage_Attack_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Montage.Attack.4"),
-		FString("Attack 4"));	
+		FString("Attack 4"));
+
+/*
+ *  Player Tags
+ */
+	GameplayTags.Player_Block_CursorTraced = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Player.Block.CursorTraced"),
+		FString("Block tracing under the cursor"));
+
+	GameplayTags.Player_Block_InputHeld = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Player.Block.InputHeld"),
+		FString("Block Input Held callback for input"));
+
+	GameplayTags.Player_Block_InputPressed = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Player.Block.InputPressed"),
+		FString("Block Input Pressed callback for input"));
+
+	GameplayTags.Player_Block_InputReleased = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Player.Block.InputReleased"),
+	FString("Block Input Released callback for input"));
+
 }

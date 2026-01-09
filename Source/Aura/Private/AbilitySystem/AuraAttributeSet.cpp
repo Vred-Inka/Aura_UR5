@@ -117,6 +117,9 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
+	if (!IsValid(Props.TargetCharacter))
+		return;
+	
 	if (Props.TargetCharacter->Implements<UCombatInterface>())
 	{
 		if (ICombatInterface::Execute_IsDead(Props.TargetCharacter))
@@ -167,15 +170,25 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& Props)
 			//TODO: use death impulse
 			if (ICombatInterface* CombatInterface =  Cast<ICombatInterface>(Props.TargetAvatarActor))
 			{
-				CombatInterface->Die();
+				FVector Impulse = UAuraAbilitySystemLibrary::GetDeathImpulse(Props.EffectContextHandle);
+				CombatInterface->Die(Impulse);
 				SendXPEvent(Props);
 			}
 		}
 		else
 		{
-			FGameplayTagContainer TagContainer;
-			TagContainer.AddLeafTag(FAuraGameplayTags::Get().Effects_HitReact);
-			Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+			if (Props.TargetCharacter->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsBeingShocked(Props.TargetCharacter))
+			{
+				FGameplayTagContainer TagContainer;
+				TagContainer.AddLeafTag(FAuraGameplayTags::Get().Effects_HitReact);
+				Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+			}
+
+			const FVector& KnockbackForce = UAuraAbilitySystemLibrary::GetKnockbackForce(Props.EffectContextHandle);
+			if (!KnockbackForce.IsNearlyZero(1.f))
+			{
+				Props.TargetCharacter->LaunchCharacter(KnockbackForce, true, true);
+			}
 		}
 
 		const bool bBlockHit =  UAuraAbilitySystemLibrary::IsBlockedHit(Props.EffectContextHandle);
@@ -206,9 +219,17 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& Props)
 	DebuffEffect->Period = DebuffFrequency;
 	DebuffEffect->DurationMagnitude = FScalableFloat(DebuffDuration);
 
+	const FGameplayTag DebuffTag = GameplayTags.DamageTypesToDebuffs[DamageType];
 	FInheritedTagContainer InheritedTags;
 	InheritedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
 	InheritedTags.CombinedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
+	{
+		InheritedTags.AddTag(GameplayTags.Player_Block_CursorTraced);
+		InheritedTags.AddTag(GameplayTags.Player_Block_InputHeld);
+		InheritedTags.AddTag(GameplayTags.Player_Block_InputPressed);
+		InheritedTags.AddTag(GameplayTags.Player_Block_InputReleased);
+	}
 	UTargetTagsGameplayEffectComponent& Component = DebuffEffect->AddComponent<UTargetTagsGameplayEffectComponent>();
 	Component.SetAndApplyTargetTagChanges(InheritedTags);
 	//DebuffEffect->InheritableOwnedTagsContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
@@ -248,9 +269,17 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& Props)
 
 		if (NumLevelUps > 0)
 		{
-			const int32 AttributePointsReward = IPlayerInterface::Execute_GetAttributePointsReward(Props.SourceCharacter, CurrentLevel);
-			const int32 SpellPointsReward = IPlayerInterface::Execute_GetSpellPointsReward(Props.SourceCharacter, CurrentLevel);
 			IPlayerInterface::Execute_AddToPlayerLevel(Props.SourceCharacter, NumLevelUps);
+			
+			int32 AttributePointsReward = 0;
+			int32 SpellPointsReward = 0;
+			
+			for (int32 i = 0; i < NumLevelUps; i++)
+			{
+				AttributePointsReward += IPlayerInterface::Execute_GetAttributePointsReward(Props.SourceCharacter, CurrentLevel + i);
+				SpellPointsReward += IPlayerInterface::Execute_GetSpellPointsReward(Props.SourceCharacter, CurrentLevel + i);
+			}			
+
 			IPlayerInterface::Execute_AddToAttributePoints(Props.SourceCharacter, AttributePointsReward);
 			IPlayerInterface::Execute_AddToSpellPoints(Props.SourceCharacter, SpellPointsReward);
 

@@ -12,44 +12,53 @@ struct FDamageEffectParams
 
 	FDamageEffectParams(){};
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UObject> WorldContextObject = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TSubclassOf<UGameplayEffect> DamageGameplayEffectClass = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UAbilitySystemComponent> SourceAbilitySystemComponent;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UAbilitySystemComponent> TargetAbilitySystemComponent;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float BaseDamage{0.0f};
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float AbilityLevel{1.0f};
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	FGameplayTag DamageType = FGameplayTag();
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffChance{0.0f};
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffDamage{0.0f};
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffDuration{0.0f};
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DebuffFrequency{0.0f};
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float DeathImpulseMagnitude{0.0f};
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	FVector DeathImpulse{FVector::ZeroVector};
+
+	UPROPERTY(BlueprintReadWrite)
+	float KnockbackForceMagnitude{0.0f};
+
+	UPROPERTY(BlueprintReadWrite)
+	float KnockbackChance{0.0f};
+
+	UPROPERTY(BlueprintReadWrite)
+	FVector KnockbackForce{FVector::ZeroVector};
 };
 
 USTRUCT(BlueprintType)
@@ -66,6 +75,7 @@ public:
 	float GetDebuffFrequency() const { return DebuffFrequency; }
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 	FVector GetDeathImpulse() const { return DeathImpulse; }
+	FVector GetKnockbackForce() const { return KnockbackForce; }
 
 	void SetIsCriticalHit(bool bInIsCriticalHit) { this->bIsCriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockingHit) { this->bIsBlockedHit = bInIsBlockingHit; }
@@ -75,6 +85,7 @@ public:
 	void SetDebuffFrequency(float InFrequency) { this->DebuffFrequency = InFrequency; }
 	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { this->DamageType = InDamageType; }
 	void SetDeathImpulse(const FVector& InDeathImpulse) { this->DeathImpulse = InDeathImpulse; }
+	void SetKnockbackForce(const FVector& InForce) { this->KnockbackForce = InForce; }
 	
 	virtual UScriptStruct* GetScriptStruct() const override
 	{
@@ -119,6 +130,9 @@ protected:
 
 	UPROPERTY()
 	FVector DeathImpulse =  FVector::ZeroVector;
+
+	UPROPERTY()
+	FVector KnockbackForce = FVector::ZeroVector;
 };
 
 template<>
