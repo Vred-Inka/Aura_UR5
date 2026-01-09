@@ -283,7 +283,7 @@ float UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(const FGameplayEffec
 	return 0.0f;
 }
 
-FVector UAuraAbilitySystemLibrary::GetRadialDamageIOrigin(const FGameplayEffectContextHandle& EffectContextHandle)
+FVector UAuraAbilitySystemLibrary::GetRadialDamageOrigin(const FGameplayEffectContextHandle& EffectContextHandle)
 {
 	if (const FAuraGameplayEffectContext* AuraEffectContext =  static_cast<const FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
 	{

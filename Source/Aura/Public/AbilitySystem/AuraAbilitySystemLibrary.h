@@ -89,7 +89,7 @@ public:
 	static float GetRadialDamageOuterRadius(const FGameplayEffectContextHandle& EffectContextHandle);
 
 	UFUNCTION(BlueprintPure, Category="AuraAbilitysystemLibrary|GameplayEffects")
-	static FVector GetRadialDamageIOrigin(const FGameplayEffectContextHandle& EffectContextHandle);
+	static FVector GetRadialDamageOrigin(const FGameplayEffectContextHandle& EffectContextHandle);
 
 	/* Effect Context Setters */
 

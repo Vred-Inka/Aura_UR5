@@ -7,7 +7,7 @@
 #include "Interaction/PlayerInterface.h"
 #include "AuraCharacter.generated.h"
 
-class NiagaraComponent;
+class UNiagaraComponent;
 class UCameraComponent;
 class USpringArmComponent;
 /**

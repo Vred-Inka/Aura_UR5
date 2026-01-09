@@ -11,6 +11,7 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
 
 struct AuraDamageStatics
 {
@@ -144,6 +145,8 @@ void UExacCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	}
 	
 	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
+	
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();  
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
 	FAggregatorEvaluateParameters EvaluateParameters;
@@ -177,6 +180,39 @@ void UExacCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 		Resistance =  FMath::Clamp(Resistance,0.0f, 100.0f);
 
 		DamageTypeValue *= (100.0f - Resistance) / 100.0f;
+
+		if (UAuraAbilitySystemLibrary::IsRadialDamage(EffectContextHandle))
+		{
+			// 1. Ovverride TakeDamage in AuraCharacterClass *
+			// 2. Create delegate OnDamage on the Victim here *
+			// 3. Bind Lambda to OnDamageDelegate on a Victim here *
+			// 4. Call UGameplayStatics::ApplyRadialDamageWithFallof to cause damage(
+			//(this will result on the Victim, which will then broadcast OnDamageDelegate)
+			// 5. In Lambda set DamageTypeValue to the damage received from broadcast
+
+			if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(TargetAvatar))
+			{
+				CombatInterface->GetOnDamageDelegate().AddLambda([&](float DamageAmount)
+				{
+					DamageTypeValue = DamageAmount;
+				});
+			}
+
+			UGameplayStatics::ApplyRadialDamageWithFalloff(
+				TargetAvatar,
+				DamageTypeValue,
+				0,
+				UAuraAbilitySystemLibrary::GetRadialDamageOrigin(EffectContextHandle),
+				UAuraAbilitySystemLibrary::GetRadialDamageInnerRadius(EffectContextHandle),
+				UAuraAbilitySystemLibrary::GetRadialDamageOuterRadius(EffectContextHandle),
+				1.0f,
+				UDamageType::StaticClass(),
+				TArray<AActor*>(),
+				SourceAvatar,
+				nullptr
+			);			
+		}		
+		
 		Damage += DamageTypeValue;
 	}
 	
@@ -185,7 +221,6 @@ void UExacCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	TargetBlockChance =  FMath::Max(TargetBlockChance, 0.0f);
 
 	const bool bBlocked = FMath::RandRange(1,100) < TargetBlockChance;
-	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
 	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
 	
 	Damage = bBlocked ? Damage/2.0f : Damage;
