@@ -12,4 +12,5 @@ void AAuraFireBall::OnSphereOverlap(UPrimitiveComponent* OverlapedComponent, AAc
 void AAuraFireBall::BeginPlay()
 {
 	Super::BeginPlay();
+	StartOutgoingTimeline();
 }
