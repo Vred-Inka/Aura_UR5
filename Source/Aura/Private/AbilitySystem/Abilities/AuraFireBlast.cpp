@@ -4,7 +4,6 @@
 #include "AbilitySystem/Abilities/AuraFireBlast.h"
 
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
-#include "EntitySystem/MovieSceneEntitySystemRunner.h"
 
 FString UAuraFireBlast::GetDescription(int32 Level)
 {
