@@ -154,4 +154,19 @@ public:
 	static TArray<FVector> EvenlyRotatedVectors(const FVector& Forward, const FVector& Axis, float Spread, int32 NumProjectiles);
 
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, int32 CharacterLevel);
+
+	/* Damage Effect Params */
+
+	UFUNCTION(BlueprintCallable, Category ="AuraAbilitysystemLibrary|DamageEffect")
+	static void SetIsRadialDamageEffectParam(UPARAM(ref) FDamageEffectParams& DamageEffectParams, bool bInIsRadial,
+		float InnerRadius,float OuterRadius, FVector Origin);
+
+	UFUNCTION(BlueprintCallable, Category ="AuraAbilitysystemLibrary|DamageEffect")
+	static void SetKnockbackDirection(UPARAM(ref) FDamageEffectParams& DamageEffectParams, FVector KnockbackDirection, float Magnitude = 0.0f);
+
+	UFUNCTION(BlueprintCallable, Category ="AuraAbilitysystemLibrary|DamageEffect")
+	static void SetSetDeathImpulseDirection(UPARAM(ref) FDamageEffectParams& DamageEffectParams, FVector ImpulseDirection, float Magnitude = 0.0f);
+
+	UFUNCTION(BlueprintCallable, Category ="AuraAbilitysystemLibrary|DamageEffect")
+	static void SetTargetEffectParamsASC(UPARAM(ref) FDamageEffectParams& DamageEffectParams, UAbilitySystemComponent* InASC);
 };
