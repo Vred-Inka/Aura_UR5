@@ -32,4 +32,19 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<USaveGame> LoadScreenSaveGameClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	FString StartingMapName;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSoftObjectPtr<UWorld> DefaultWorld;
+
+	UPROPERTY(EditDefaultsOnly)
+	FString DefaultWorldName;
+
+	UPROPERTY(EditDefaultsOnly)
+	TMap<FString, TSoftObjectPtr<UWorld>> Worlds;
+
+protected:
+	virtual void BeginPlay() override;
 };
