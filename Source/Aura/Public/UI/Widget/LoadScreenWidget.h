@@ -16,7 +16,7 @@ class AURA_API ULoadScreenWidget : public UUserWidget
 
 public:
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void BlueprintInitializeWidget();
 	
 };
