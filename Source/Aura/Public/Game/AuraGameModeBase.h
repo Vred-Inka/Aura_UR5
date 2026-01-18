@@ -30,6 +30,9 @@ public:
 	ULoadScreenSaveGame* GetSaveSlotData(const FString& SlotName, int32 SlotIndex) const;
 	static void DeleteSlot(const FString& SlotName, int32 SlotIndex);
 
+	ULoadScreenSaveGame* RetreiveInGameSaveData();
+	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject);
+
 	void TravelToMap(UMVVM_LoadSlot* Slot);
 
 	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;

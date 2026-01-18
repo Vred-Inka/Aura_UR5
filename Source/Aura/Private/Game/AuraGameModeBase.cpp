@@ -7,6 +7,7 @@
 #include "Game/LoadScreenSaveGame.h"
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
+#include "Tools/UEdMode.h"
 #include "UI/ViewModels/MVVM_LoadSlot.h"
 
 void AAuraGameModeBase::SaveSlotData(UMVVM_LoadSlot& LoadSlot, int32 SlotIndex)
@@ -46,6 +47,24 @@ void AAuraGameModeBase::DeleteSlot(const FString& SlotName, int32 SlotIndex)
 	{
 		UGameplayStatics::DeleteGameInSlot(SlotName, SlotIndex);
 	}
+}
+
+ULoadScreenSaveGame* AAuraGameModeBase::RetreiveInGameSaveData()
+{
+	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(GetGameInstance());
+	const FString SlotName = AuraGameInstance->LoadSlotName;
+	const int32 SlotIndex = AuraGameInstance->LoadSlotIndex;
+	return GetSaveSlotData(SlotName, SlotIndex);
+}
+
+void AAuraGameModeBase::SaveInGameProgressData(ULoadScreenSaveGame* SaveObject)
+{
+	UAuraGameInstance* AuraGameInstance = Cast<UAuraGameInstance>(GetGameInstance());
+	const FString SlotName = AuraGameInstance->LoadSlotName;
+	const int32 SlotIndex = AuraGameInstance->LoadSlotIndex;
+
+	AuraGameInstance->PlayerStartTag = SaveObject->PlayerStartTag;
+	UGameplayStatics::SaveGameToSlot(SaveObject, SlotName, SlotIndex);
 }
 
 void AAuraGameModeBase::TravelToMap(UMVVM_LoadSlot* Slot)
