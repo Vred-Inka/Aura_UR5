@@ -38,13 +38,13 @@ public:
 	TSubclassOf<USaveGame> LoadScreenSaveGameClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	FString StartingMapName;
+	FString DefaultWorldName;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSoftObjectPtr<UWorld> DefaultWorld;
 
 	UPROPERTY(EditDefaultsOnly)
-	FString DefaultWorldName;
+	FName DefaultPlayerStartTag;
 
 	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSoftObjectPtr<UWorld>> Worlds;
