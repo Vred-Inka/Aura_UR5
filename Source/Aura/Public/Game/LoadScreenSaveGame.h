@@ -37,6 +37,9 @@ public:
 	FString MapName = FString("Default Map Name");
 
 	UPROPERTY()
+	FName PlayerStartTag;
+
+	UPROPERTY()
 	int32 PlayerLevel = 1;
 
 	void SetPlayerName(FString InPlayerName);
