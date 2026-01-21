@@ -15,7 +15,6 @@
 #include "AbilitySystem/Data/AbilityInfo.h"
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "Camera/CameraComponent.h"
-#include "Game/AuraGameInstance.h"
 #include "Game/AuraGameModeBase.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -57,11 +56,9 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 
 	LoadProgress();
 
-	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
-
-	if (AuraGameMode != nullptr)
+	if (AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this)))
 	{
-		//AuraGameMode->LoadWorldState();
+		AuraGameMode->LoadWorldState(GetWorld());
 	}
 }
 
