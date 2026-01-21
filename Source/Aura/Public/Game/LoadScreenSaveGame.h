@@ -41,6 +41,11 @@ struct FSavedAbility
 	
 };
 
+inline bool operator==(const FSavedAbility& A, const FSavedAbility& B)
+{
+	return A.AbilityTag.MatchesTagExact(B.AbilityTag);
+}
+
 /**
  * 
  */

@@ -33,6 +33,8 @@ public:
 	ULoadScreenSaveGame* RetreiveInGameSaveData();
 	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject);
 
+	void SaveWorldState();
+
 	void TravelToMap(UMVVM_LoadSlot* Slot);
 
 	virtual AActor* ChoosePlayerStart_Implementation(AController* Player) override;
