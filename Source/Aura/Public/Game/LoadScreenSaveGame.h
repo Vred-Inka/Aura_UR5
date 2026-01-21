@@ -54,7 +54,7 @@ struct FSavedActor
 	FName ActorName = FName();
 
 	UPROPERTY()
-	FTransform ActorLocation = FTransform();
+	FTransform Transform = FTransform();
 
 	//Contains Serialized variables form the actor - only those marked with saveGame specifier
 	UPROPERTY()
