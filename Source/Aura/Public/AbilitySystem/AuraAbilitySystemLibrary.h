@@ -53,7 +53,7 @@ public:
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, Category="AuraAbilitysystemLibrary|CharcterClassDefaults")
-	static UAbilityInfo* GetAbilityClassInfo(const UObject* WorldContextObject);
+	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
 
 	/*Effect Context Getters*/
 	
