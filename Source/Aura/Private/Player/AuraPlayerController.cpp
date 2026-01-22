@@ -19,6 +19,7 @@
 #include "Input/AuraInputComponent.h"
 #include "Interaction/HighlightInterface.h"
 #include "GameFramework/Character.h"
+#include "Interaction/EnemyInterface.h"
 #include "UI/Widget/DamageTextComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
@@ -101,42 +102,50 @@ void AAuraPlayerController::CursorTrace()
 {
 	if (GetASC()!= nullptr && GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_CursorTraced))
 	{
-		if (LastActor != nullptr)
-		{
-			LastActor->UnhighlightActor();
-		}
-
-		if (ThisActor != nullptr)
-		{
-			ThisActor->UnhighlightActor();
-		}
-
-		LastActor = nullptr;
-		ThisActor =  nullptr;
+		UnhighlightActor(LastActor);
+		UnhighlightActor(ThisActor);
 		
+		LastActor = nullptr;
+		ThisActor = nullptr;		
 		return;
 	}
 
 	const ECollisionChannel TraceChannel = IsValid(MagicCircle) ? ECC_ExcludePlayers : ECC_Visibility;
 	
 	GetHitResultUnderCursor(TraceChannel, false, CursorHit);
-	if (!CursorHit.IsValidBlockingHit()) return;
+	if (!CursorHit.bBlockingHit) return;
 
 	LastActor = ThisActor;
-	ThisActor = CursorHit.GetActor();
+	if (IsValid(CursorHit.GetActor()) && CursorHit.GetActor()->Implements<UHighlightInterface>())
+	{
+		ThisActor = CursorHit.GetActor();
+	}
+	else
+	{
+		ThisActor = nullptr;
+	}
 	
 	if (LastActor != ThisActor)
 	{
-		if (LastActor != nullptr)
-		{
-			LastActor->UnhighlightActor();
-		}
-
-		if (ThisActor != nullptr)
-		{
-			ThisActor->HighlightActor();
-		}
+		UnhighlightActor(LastActor);		
+		HighlightActor(ThisActor);		
 	}	
+}
+
+void AAuraPlayerController::HighlightActor(AActor* InActor)
+{
+	if (IsValid(InActor) && InActor->Implements<UHighlightInterface>())
+	{
+		IHighlightInterface::Execute_HighlightActor(InActor);
+	}
+}
+
+void AAuraPlayerController::UnhighlightActor(AActor* InActor)
+{
+	if (IsValid(InActor) && InActor->Implements<UHighlightInterface>())
+	{
+		IHighlightInterface::Execute_UnhighlightActor(InActor);
+	}
 }
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
@@ -147,9 +156,16 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 	}
 	
 	if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
-	{			
-		bTargeting = (ThisActor == nullptr) ? false : true;
-		bAutoRunning = false;
+	{
+		if (IsValid(ThisActor))
+		{
+			TargetingStatus = ThisActor->Implements<UEnemyInterface>() ? ETargetingStatus::TargetingEnemy : ETargetingStatus::TargetingNonEnemy;
+			bAutoRunning = false;
+		}
+		else
+		{
+			TargetingStatus = ETargetingStatus::NotTargeting;
+		}
 	}
 
 	if (GetASC() != nullptr)
@@ -179,7 +195,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		GetASC()->AbilityInputTagReleased(InputTag);
 	}
 	
-	if (!bTargeting && !bShiftKeyDown)
+	if (TargetingStatus != ETargetingStatus::TargetingEnemy && !bShiftKeyDown)
 	{	
 		const APawn* ControlledPawn = GetPawn();
 		if (FollowTime <= ShortPressThreshold && ControlledPawn != nullptr)
@@ -208,7 +224,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		}
 
 		FollowTime = 0.0f;
-		bTargeting = false;
+		TargetingStatus = ETargetingStatus::NotTargeting;
 	}
 }
 
@@ -228,7 +244,7 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		return;
 	}
 
-	if (bTargeting || bShiftKeyDown)
+	if (TargetingStatus ==  ETargetingStatus::TargetingEnemy || bShiftKeyDown)
 	{
 		if (GetASC() != nullptr)
 		{
