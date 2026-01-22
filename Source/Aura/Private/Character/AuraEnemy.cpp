@@ -31,8 +31,13 @@ AAuraEnemy::AAuraEnemy()
 
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 	
-	HealthBar =  CreateDefaultSubobject<UWidgetComponent>("HealthBar");
+	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetRootComponent());
+
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	GetMesh()->MarkRenderStateDirty();
+	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	Weapon->MarkRenderStateDirty();
 
 	BaseWalkSpeed = 250.0f;
 }
@@ -63,6 +68,10 @@ void AAuraEnemy::UnhighlightActor_Implementation()
 {
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
+}
+
+void AAuraEnemy::SetMoveToLocation_Implementation(FVector& OutDestination)
+{
 }
 
 int32 AAuraEnemy::GetPlayerLevel_Implementation()

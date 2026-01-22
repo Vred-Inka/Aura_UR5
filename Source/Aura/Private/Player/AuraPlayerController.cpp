@@ -200,6 +200,15 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		const APawn* ControlledPawn = GetPawn();
 		if (FollowTime <= ShortPressThreshold && ControlledPawn != nullptr)
 		{
+			if (IsValid(ThisActor) && ThisActor->Implements<UHighlightInterface>())
+			{
+				IHighlightInterface::Execute_SetMoveToLocation(ThisActor, CachedDestination);
+			}
+			else if (GetASC() != nullptr && !GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_InputPressed))
+			{
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
+			}
+			
 			if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this,
 				ControlledPawn->GetActorLocation(), CachedDestination))
 			{
@@ -215,11 +224,6 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				}
 				
 				bAutoRunning = true;
-			}
-
-			if (GetASC() != nullptr && !GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_InputPressed))
-			{
-				UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ClickNiagaraSystem, CachedDestination);
 			}
 		}
 
