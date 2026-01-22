@@ -17,7 +17,7 @@
 #include "Components/SplineComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "Input/AuraInputComponent.h"
-#include "Interaction/EnemyInterface.h"
+#include "Interaction/HighlightInterface.h"
 #include "GameFramework/Character.h"
 #include "UI/Widget/DamageTextComponent.h"
 
