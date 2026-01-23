@@ -26,8 +26,11 @@ public:
 	virtual void LoadActor_Implementation() override;
 	/* End Save Interface*/
 
-	UPROPERTY(SaveGame, BlueprintReadOnly)
+	UPROPERTY(SaveGame, BlueprintReadWrite)
 	bool bReached = false;
+
+	UPROPERTY(EditAnywhere)
+	bool bBindOverlapCallback = true;	
 
 protected:
 	UFUNCTION()
@@ -51,6 +54,7 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void CheckpointReached(UMaterialInstanceDynamic* DynamicMaterialInterface);
 
+	UFUNCTION(BlueprintCallable)
 	void HandleGlowEffects();
 
 protected:	
