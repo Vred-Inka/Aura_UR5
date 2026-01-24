@@ -57,6 +57,8 @@ public:
 
 	FString GetMapNameFromAssetName(const FString& MapAssetName) const;
 
+	void PlayerDied(ACharacter* DeadCharacter);
+
 protected:
 	virtual void BeginPlay() override;
 };
