@@ -9,6 +9,7 @@
 #include "Game/LoadScreenSaveGame.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+class ULootTiers;
 class UOverlayWidgetController;
 class UAbilitySystemComponent;
 struct FWidgetControllerParams;
@@ -54,6 +55,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="AuraAbilitysystemLibrary|CharcterClassDefaults")
 	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category="AuraAbilitysystemLibrary|CharcterClassDefaults",  meta = (DefaultToSelf =  "WorldContextObject"))
+	static ULootTiers* GetLootTiers(const UObject* WorldContextObject);
 
 	/*Effect Context Getters*/
 	
