@@ -35,6 +35,20 @@ void UMVVM_LoadScreen::NewSlotButtonPressed(int32 Slot, const FString& EnteredNa
 {
 	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
 
+	if (!IsValid(AuraGameMode))
+	{
+		GEngine->AddOnScreenDebugMessage(1, 15.0, FColor::Magenta,
+			FString("Please switch to single player!"));
+		return;
+	}
+
+	if (EnteredName.IsEmpty())
+	{
+		GEngine->AddOnScreenDebugMessage(1, 15.0, FColor::Magenta,
+			FString("Please enter player name!"));
+		return;
+	}
+	
 	LoadSlots[Slot]->SetPlayerName(EnteredName);
 	LoadSlots[Slot]->SetPlayerLevel(1);
 	LoadSlots[Slot]->SetMapName(AuraGameMode->DefaultWorldName);
@@ -102,6 +116,9 @@ void UMVVM_LoadScreen::PlayButtonPressed()
 void UMVVM_LoadScreen::LoadData()
 {
 	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(this));
+
+	if (!IsValid(AuraGameMode))
+		return;
 	
 	for (const TTuple<int32, UMVVM_LoadSlot*>& LoadSlot : LoadSlots)
 	{
