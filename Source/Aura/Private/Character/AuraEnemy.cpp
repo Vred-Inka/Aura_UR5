@@ -99,6 +99,16 @@ AActor* AAuraEnemy::GetCombatTarget_Implementation() const
 	return CombatTarget;
 }
 
+void AAuraEnemy::SetCharacterClass(ECharacterClass InCharacterClass)
+{
+	CharacterClass = InCharacterClass;
+}
+
+void AAuraEnemy::SetLevel(int32 NewLevel)
+{
+	Level = NewLevel;
+}
+
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
